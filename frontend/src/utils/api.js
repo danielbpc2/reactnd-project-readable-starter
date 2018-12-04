@@ -84,6 +84,14 @@ export const editComment = (commentId, change) =>
     body: JSON.stringify(change)
   }).then(res => res.json())
 
+// Delete flag on a comment
+export const deleteComment = (commentId) =>
+  fetch(`${url}/comments/${commentId}`,
+  {
+    headers: {...headers},
+    method: 'DELETE',
+  }).then(res => res.json())
+
 //Get all of the categories available for the app. List is found in `categories.js`.
 export const getCategories = () =>
   fetch(`${url}/categories`, { headers })
@@ -93,14 +101,6 @@ export const getCategories = () =>
 export const getCategoryPosts = (category) =>
   fetch(`${url}/${category}/posts`, { headers })
     .then(res => res.json())
-
-// Delete flag on a comment
-export const deleteComment = (commentId) =>
-  fetch(`${url}/comments/${commentId}`,
-  {
-    headers: {...headers},
-    method: 'DELETE',
-  }).then(res => res.json()).then(data => console.log(data))
 
 // getCategories()
 // getCategoryPosts('redux')
