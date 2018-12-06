@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Fragment, Component } from 'react';
 import './App.css';
 import { handleInitialData } from './actions/shared'
 import { connect } from 'react-redux'
+import { BrowserRouter, Route } from 'react-router-dom'
+import PostsPage from './components/postsPage'
+import CategoryPage from './components/categoryPage'
+import NewPostPage from './components/newPostPage'
+
 
 class App extends Component {
   componentDidMount (){
@@ -11,25 +15,16 @@ class App extends Component {
   }
 
   render() {
-    const { posts, categories } = this.props
     return (
-      <div className="App">
-        Hello Udacity
-        <h3>categories:</h3>
-        {categories.map(category => <p key={category.name}>{category.name}</p>)}
-        <h3>posts:</h3>
-        {posts.map(post => <p key={post.id}>{post.title}</p>)}
-      </div>
+      <BrowserRouter>
+        <Fragment>
+          <Route exact path='/' component={PostsPage}/>
+          <Route path='/:category/posts' component={CategoryPage}/>
+          <Route path='/posts/new' component={NewPostPage}/>
+        </Fragment>
+      </BrowserRouter>
     );
   }
 }
 
-function mapStateToProps({ posts, categories }){
-  return {
-    posts: Object.keys(posts).map(index => posts[index])
-      .sort( ( x, y ) => ( y.timestamp - x.timestamp ) ),
-    categories: Object.keys(categories).map(index => categories[index])
-  }
-}
-
-export default connect(mapStateToProps)(App);
+export default connect()(App);
