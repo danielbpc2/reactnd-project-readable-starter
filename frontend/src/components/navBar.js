@@ -4,10 +4,10 @@ import { connect } from 'react-redux'
 
 class NavBar extends Component {
   render(){
-    const { categories } = this.props
+    const { categories, categoryName } = this.props
     return(
       <div className='navBar'>
-      {this.props.categoryName && <h1>{this.props.categoryName.toUpperCase()}</h1> }
+      {categoryName && <h1>{categoryName.toUpperCase()}</h1> }
         <div>
           <Link to='/'>Home</Link>
           <Link to='/posts/new'>New Post</Link>

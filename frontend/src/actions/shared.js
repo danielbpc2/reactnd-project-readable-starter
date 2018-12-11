@@ -7,10 +7,10 @@ export const handleInitialData = () => {
     return(
       getAllPosts().then((data) => (
         dispatch(receivePosts(data))
-        )),
+      )),
       getCategories().then((data) => (
         dispatch(receiveCategories(data.categories))
-        ))
+      ))
     )
   }
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
+import {handleAddPost} from '../actions/posts'
+import { Redirect } from 'react-router-dom'
 
 class NewPost extends Component {
   state = {
@@ -7,35 +9,62 @@ class NewPost extends Component {
     title: '',
     author: '',
     category: '',
+    redirect: false,
+  }
+
+  handleFormChange(event, input) {
+    this.setState( {[input]: event.target.value} )
+  }
+
+  onSubmit(event){
+    const {body, title, author, category} = this.state
+    event.preventDefault();
+    const {dispatch} = this.props
+    dispatch(handleAddPost({title: title, body: body, author: author, category: category}))
+    this.setState({ body: '', title: '', author: '', category: '', redirect: true })
   }
 
   render() {
+    const {redirect, body, title, author, category} = this.state
+    const { categories } = this.props
+
+    if (redirect === true) {
+      return <Redirect to='/'/>
+    }
+
     return (
-      <form className='container'>
+      <form className='container' onSubmit={e => this.onSubmit(e)}>
         <div className='form-group'>
           <label>Title:</label>
-          <input class="form-control" type='text' value={ this.state.title }/>
+          <input className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
         </div>
         <div className='form-group'>
           <label>Author:</label>
-          <input class="form-control" type='text' value={ this.state.author }/>
+          <input className="form-control" type='text' onChange={e => this.handleFormChange(e,'author')} value={ this.state.author }/>
         </div>
         <div className='form-group'>
           <label>Text:</label>
-          <textarea class="form-control" value={this.state.body}/>
+          <textarea className="form-control" onChange={e => this.handleFormChange(e,'body')} value={this.state.body}/>
         </div>
         <div className='form-group'>
           <label>Category:</label>
-          <select class="form-control" value={this.state.category}>
-            <option value="react">react</option>
-            <option value="redux">redux</option>
-            <option value="udacity">udacity</option>
+          <select className="form-control" onChange={e => this.handleFormChange(e,'category')} value={this.state.category}>
+            <option value=''>None</option>
+            {categories.map(category => <option key={category.name}>{category.name}</option>)}
           </select>
         </div>
-        <button type='submit' className='btn btn-success'>Submit</button>
+        {body !== '' && title !== '' && author !== '' && category !== '' ?
+        <button type='submit' className={'btn btn-success'}>Submit</button>
+        : null
+      }
       </form>
     )
   }
 }
 
-export default NewPost;
+function mapStateToProps({categories}, props){
+  return{
+    categories: Object.keys(categories).map(index => categories[index])
+  }
+}
+export default connect(mapStateToProps)(NewPost);

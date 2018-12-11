@@ -61,7 +61,9 @@ code {
   background: white;
   color: black;
 }
-
+.tab:hover {
+  cursor: pointer;
+}
 /*--------------- posts*/
 .post {
   display: flex;
@@ -118,7 +120,17 @@ code {
   border-radius: 2px;
   margin: auto;
 }
-
+.post-arrow-down {
+  transition: all 0.15s ease;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-top: 9px solid black;
+  border-radius: 2px;
+  margin: auto;
+}
 /* Controls design */
 .post-controls {
   display: flex;
@@ -144,21 +156,18 @@ code {
 /* Hover effects */
 .post:hover {
   background: #f7f7fa;
-  cursor: pointer;
 }
-.post-upvote:hover, .post-upvote.post-upvote-upvoted {
-  color: #5898f1;
-  cursor: pointer;
-}
-.post-upvote-upvoted .post-arrow {
-  border-bottom-color: #5898f1;
-}
-// .post:hover .post-upvote {
-//   transform: scale(1.2)
-// }
-.post:hover .post-controls-hidden a {
-  color: #E6E6E6;
-}
-.post-upvote:hover .post-arrow {
+
+.post-arrow:hover {
   border-bottom: 9px solid #5898f1;
+}
+.post-arrow-blue {
+  border-bottom: 9px solid #5898f1;
+}
+.post-arrow-down:hover {
+  border-top: 9px solid #dc3545;
+}
+
+.post-arrow-down-red{
+  border-top: 9px solid #dc3545;
 }

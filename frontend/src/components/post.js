@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 class Post extends Component {
   render(){
@@ -8,13 +9,13 @@ class Post extends Component {
         <div className='post-upvote'>
           <div className="post-arrow"></div>
           <div className='post-count'>{post.voteScore}</div>
-          <div className="post-arrow"></div>
+          <div className="post-arrow-down"></div>
         </div>
         <div className='post-body'>
-          <h3>{post.title}</h3>
+          <Link to={`/${post.category}/${post.id}`}>{post.title}</Link>
           <p>{post.author}</p>
         </div>
-        <ul className="list-inline post-controls hidden-sm hidden-xs">
+        <ul className="list-inline post-controls">
           <li><span>button</span></li>
           <li><span>button</span></li>
           <li><span>button</span></li>
