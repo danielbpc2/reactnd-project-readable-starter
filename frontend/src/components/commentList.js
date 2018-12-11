@@ -8,7 +8,7 @@ class CommentList extends Component {
         <ul className="list-unstyled">
           {this.props.comments.map(comment =>
             <li key={comment.id}>
-              <Comment comment={comment}/>
+              <Comment handleDeleteComment={this.props.handleDeleteComment} comment={comment}/>
             </li>)}
         </ul>
       </div>

@@ -7,7 +7,7 @@ class NavBar extends Component {
     const { categories, categoryName } = this.props
     return(
       <div className='navBar'>
-      {categoryName && <h1>{categoryName.toUpperCase()}</h1> }
+      {categoryName && <Link to={`/${categoryName}`}>{categoryName.toUpperCase()}</Link> }
         <div>
           <Link to='/'>Home</Link>
           <Link to='/posts/new'>New Post</Link>
@@ -17,7 +17,7 @@ class NavBar extends Component {
             Categories
           </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {categories.map(category => <Link to={`/${category.name}/posts`} className="dropdown-item" key={category.name}>{category.name}</Link>)}
+            {categories.map(category => <Link to={`/${category.name}`} className="dropdown-item" key={category.name}>{category.name}</Link>)}
           </div>
         </div>
       </div>

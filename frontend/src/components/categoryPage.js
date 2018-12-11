@@ -23,7 +23,7 @@ function mapStateToProps({ posts, categories }, props){
   return {
     posts: Object.keys(posts).map(index => posts[index])
       .sort( ( x, y ) => ( y.timestamp - x.timestamp ) )
-      .filter(post => post.category === category),
+      .filter(post => post.category === category && post.deleted === false),
     categoryName: category,
   }
 }

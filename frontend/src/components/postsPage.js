@@ -20,6 +20,7 @@ class PostPage extends Component {
 function mapStateToProps({ posts, categories }){
   return {
     posts: Object.keys(posts).map(index => posts[index])
+      .filter(post => post.deleted === false)
       .sort( ( x, y ) => ( y.timestamp - x.timestamp ) ),
   }
 }

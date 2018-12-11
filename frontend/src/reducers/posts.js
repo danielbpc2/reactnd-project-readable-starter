@@ -1,4 +1,4 @@
-import { RECEIVE_POSTS, ADD_POST } from '../actions/posts'
+import { RECEIVE_POSTS, ADD_POST, VOTE_POST, DELETE_POST } from '../actions/posts'
 
 const posts = (state = [], action ) => {
   switch(action.type){
@@ -11,6 +11,24 @@ const posts = (state = [], action ) => {
     return  {
       ...state,
       [action.post.id]: action.post
+    }
+    case VOTE_POST :
+    return {
+      ...state,
+      [action.id]: {
+        ...state[action.id],
+        voteScore: action.option === 'upVote'
+        ? state[action.id].voteScore += 1
+        : state[action.id].voteScore -= 1
+      }
+    }
+    case DELETE_POST:
+    return {
+      ...state,
+      [action.id]: {
+        ...state[action.id],
+        deleted: true
+      }
     }
     default :
     return state

@@ -25,7 +25,7 @@ class App extends Component {
             :
             <Fragment>
               <Route exact path='/' component={PostsPage}/>
-              <Route path='/:category/posts' component={CategoryPage}/>
+              <Route exact strict path='/:category' component={CategoryPage}/>
               <Route path='/posts/new' component={NewPostPage}/>
               <Route strict path='/:category/:id' component={PostDetailed}/>
             </Fragment>
