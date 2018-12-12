@@ -18,8 +18,9 @@ class NewPost extends Component {
 
   onSubmit(event){
     const {body, title, author, category} = this.state
-    event.preventDefault();
     const {dispatch} = this.props
+
+    event.preventDefault();
     dispatch(handleAddPost({title: title, body: body, author: author, category: category}))
     this.setState({ body: '', title: '', author: '', category: '', redirect: true })
   }
@@ -34,7 +35,7 @@ class NewPost extends Component {
 
     return (
       <form className='post-details-info' onSubmit={e => this.onSubmit(e)}>
-      <h3>Make a new Post</h3>
+        <h3>Make a new Post</h3>
         <div className='form-group'>
           <label>Title:</label>
           <input placeholder="Post Title" className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
@@ -55,9 +56,9 @@ class NewPost extends Component {
           </select>
         </div>
         {body !== '' && title !== '' && author !== '' && category !== '' ?
-        <button type='submit' className={'btn btn-success'}>Submit</button>
-        : null
-      }
+          <button type='submit' className={'btn btn-success'}>Submit</button>
+          : null
+        }
       </form>
     )
   }
@@ -68,4 +69,5 @@ function mapStateToProps({categories}, props){
     categories: Object.keys(categories).map(index => categories[index])
   }
 }
+
 export default connect(mapStateToProps)(NewPost);

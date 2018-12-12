@@ -34,9 +34,9 @@ class NewComment extends Component {
               <textarea className="form-control" placeholder={'Write your comment here.'}  onChange={(e) => {this.handleFormChange(e, 'commentBody')}} value={commentBody}/>
             </div>
             {commentBody !== '' && commentAuthor !== '' ?
-            <button type='submit' className={'btn btn-success'}>Submit</button>
-            : null
-          }
+              <button type='submit' className={'btn btn-success'}>Submit</button>
+              : null
+            }
           </form>
       </div>
     )

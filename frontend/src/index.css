@@ -14,7 +14,6 @@ code {
     monospace;
 }
 
-
 /*Navbar*/
 .navBar{
   padding: 15px;
@@ -26,6 +25,7 @@ code {
   border: solid 2px #6c4786;
   margin-bottom: 10px;
 }
+
 .navBar a {
   text-decoration: none;
 }
@@ -59,23 +59,28 @@ code {
   display: flex;
   padding: 10px 0px 0 0px
 }
+
 .tabs a {
   color: white;
 }
+
 .tabs a:hover {
   cursor: pointer;
   text-decoration: none;
   opacity: 0.8;
 }
+
 .tabs h3 {
   font-size: 17px;
   font-weight: bold;
   margin-top: 0;
 }
+
 .tabs p {
   opacity: 0.5;
   margin-bottom: 0;
 }
+
 .tab {
   background: #1a1a1b;
   flex: 0 0 50%;
@@ -83,19 +88,24 @@ code {
   padding: 20px 0;
   color: white;
 }
+
 .tab:first-child {
   border-radius: 10px 0 0 0;
 }
+
 .tab:last-child {
   border-radius: 0 10px 0 0;
 }
+
 .tab.active {
   background: white;
   color: black;
 }
+
 .tab:hover {
   cursor: pointer;
 }
+
 /*--------------- posts*/
 .post {
   display: flex;
@@ -113,6 +123,7 @@ code {
 .post-body {
   flex: 1 1 auto;
 }
+
 .post-body a {
   text-decoration: none;
   color: white;
@@ -123,6 +134,7 @@ code {
   font-size: 23px;
   margin-top: 0;
 }
+
 .post-body p {
   font-weight: lighter;
   color: #999999;
@@ -137,10 +149,12 @@ code {
   font-weight: bold;
   line-height: 20px;
 }
+
 .post-count {
   margin: 10px 0px;
   color: #999999;
 }
+
 .post-arrow {
   transition: all 0.15s ease;
   width: 0;
@@ -152,6 +166,7 @@ code {
   border-radius: 2px;
   margin: auto;
 }
+
 .post-arrow-down {
   transition: all 0.15s ease;
   width: 0;
@@ -199,9 +214,11 @@ code {
 .post-arrow:hover {
   border-bottom: 9px solid #5898f1;
 }
+
 .post-arrow-blue {
   border-bottom: 9px solid #5898f1;
 }
+
 .post-arrow-down:hover {
   border-top: 9px solid #dc3545;
 }

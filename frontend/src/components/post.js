@@ -42,38 +42,38 @@ class Post extends Component {
     const {post} = this.props
     return(
       this.state.isEditing ?
-        <div className='post'>
-           <form onSubmit={(e) => this.submitEdit(e, post.id)}>
-            <div className='form-group'>
-              <input placeholder="Write your post title" className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
-            </div>
-            <div className='form-group post-body'>
-              <p>Post content:</p>
-              <textarea placeholder="Write your post content" className="form-control" onChange={e => this.handleFormChange(e,'body')} value={ this.state.body }/>
-            </div>
-           {this.state.body !== '' &&  this.state.title !== ''?
-            <button type='submit' className={'btn btn-success'}>Submit</button>
+      <div className='post'>
+        <form onSubmit={(e) => this.submitEdit(e, post.id)}>
+          <div className='form-group'>
+            <input placeholder="Write your post title" className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
+          </div>
+          <div className='form-group post-body'>
+            <p>Post content:</p>
+            <textarea placeholder="Write your post content" className="form-control" onChange={e => this.handleFormChange(e,'body')} value={ this.state.body }/>
+          </div>
+          {this.state.body !== '' &&  this.state.title !== ''?
+          <button type='submit' className={'btn btn-success'}>Submit</button>
           : null
           }
-          </form>
-        </div>
+        </form>
+      </div>
       :
-        <div className="post">
-          <div className='post-upvote'>
-            <div className="post-arrow" onClick={(e) => this.handleVotes(post.id, 'upVote')}></div>
-            <div className='post-count'>{post.voteScore}</div>
-            <div className="post-arrow-down" onClick={(e) => this.handleVotes(post.id, 'downVote')}></div>
-          </div>
-          <div className='post-body'>
-            <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
-            <p>{post.author}</p>
-            <p>{post.commentCount} Comments.</p>
-          </div>
-          <ul className="list-inline post-controls">
-            <li><span onClick={(e) => this.enableEdit()}>Edit</span></li>
-            <li><span onClick={(e) => this.handleDelete(post.id, e)}>Delete</span></li>
-          </ul>
+      <div className="post">
+        <div className='post-upvote'>
+          <div className="post-arrow" onClick={(e) => this.handleVotes(post.id, 'upVote')}></div>
+          <div className='post-count'>{post.voteScore}</div>
+          <div className="post-arrow-down" onClick={(e) => this.handleVotes(post.id, 'downVote')}></div>
         </div>
+        <div className='post-body'>
+          <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
+          <p>{post.author}</p>
+          <p>{post.commentCount} Comments.</p>
+        </div>
+        <ul className="list-inline post-controls">
+          <li><span onClick={(e) => this.enableEdit()}>Edit</span></li>
+          <li><span onClick={(e) => this.handleDelete(post.id, e)}>Delete</span></li>
+        </ul>
+      </div>
     )
   }
 }

@@ -9,7 +9,8 @@ class Comment extends Component {
   }
 
   handleVotes(commentId, option){
-    voteComment(commentId, option).catch((e) => {
+    voteComment(commentId, option)
+    .catch((e) => {
       alert('there was an error voting this comment, try again.')
       option === 'upVote' ? this.setState((prevState) => ({voteScore: prevState.voteScore -= 1}))
       : this.setState((prevState) => ({voteScore: prevState.voteScore += 1}))
@@ -46,14 +47,14 @@ class Comment extends Component {
     return(
       this.state.isEditing ?
       <div className='container'>
-         <form className='comment-form comment-text' onSubmit={(e) => this.submitEdit(e, comment.id)}>
+        <form className='comment-form comment-text' onSubmit={(e) => this.submitEdit(e, comment.id)}>
           <div className='form-group'>
             <textarea className="form-control" onChange={e => this.handleFormChange(e,'body')} value={ body }/>
           </div>
          {body !== '' ?
           <button type='submit' className={'btn btn-success'}>Submit</button>
-        : null
-        }
+          : null
+          }
         </form>
       </div>
       :

@@ -104,13 +104,13 @@ class PostDetailed extends Component {
                 <div className='post-details-body'>
                   <p>{post.body}</p>
                 </div>
-                  <div className='post-details-controls'>
+                <div className='post-details-controls'>
                     <button className='btn btn-secondary' onClick={(e) => this.enableEdit()}>Edit</button>
                     <button className='btn btn-danger' onClick={(e) => this.handleDelete(post.id, e)}>Delete</button>
-                  </div>
-                  <p style={{marginBottom: '0px'}}>{comments.length} comments</p>
                 </div>
+                <p style={{marginBottom: '0px'}}>{comments.length} comments</p>
               </div>
+            </div>
             :
               <div className='container'>
                 <div className='post-details-info'>
@@ -126,8 +126,8 @@ class PostDetailed extends Component {
                 </div>
               </div>
              }
-              <NewComment onSubmit={this.onSubmit} postId={post.id}/>
-              <CommentList handleDeleteComment={this.handleDeleteComment} comments={comments}/>
+            <NewComment onSubmit={this.onSubmit} postId={post.id}/>
+            <CommentList handleDeleteComment={this.handleDeleteComment} comments={comments}/>
           </Fragment>
         :
         null
@@ -144,4 +144,5 @@ function mapStateToProps({posts}, props ) {
     post: post,
   }
 }
+
 export default withRouter(connect(mapStateToProps)(PostDetailed))

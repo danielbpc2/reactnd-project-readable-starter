@@ -13,7 +13,7 @@ class PostPage extends Component {
           <PostList posts={posts}/>
         </div>
       </Fragment>
-      )
+    )
   }
 }
 
