@@ -63,6 +63,7 @@ class Post extends Component {
           <div className='post-body'>
             <Link to={`/${post.category}/${post.id}`}>{post.title}</Link>
             <p>{post.author}</p>
+            <p>{post.commentCount} Comments.</p>
           </div>
           <ul className="list-inline post-controls">
             <li><span onClick={(e) => this.enableEdit()}>Edit</span></li>

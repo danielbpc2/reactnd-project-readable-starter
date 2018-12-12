@@ -87,6 +87,7 @@ class PostDetailed extends Component {
                   <div className="post-arrow" onClick={(e) => this.handleVotes(post.id, 'upVote')}></div>
                   <p>{post.voteScore}</p>
                   <div className="post-arrow-down" onClick={(e) => this.handleVotes(post.id, 'downVote')}></div>
+                  <p>{post.commentCount} comments</p>
                   <p>{post.body}</p>
                   <button onClick={(e) => this.handleDelete(post.id, e)}>Delete</button>
                   <button onClick={(e) => this.enableEdit()}>Edit</button>
