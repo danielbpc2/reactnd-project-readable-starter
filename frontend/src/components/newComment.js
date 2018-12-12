@@ -24,7 +24,8 @@ class NewComment extends Component {
     const { commentBody, commentAuthor } = this.state
 
     return (
-      <form className='container' onSubmit={e => this.handleSubmit(e)}>
+      <form className='container text-center' onSubmit={e => this.handleSubmit(e)}>
+        <h3>Leave a comment</h3>
         <div className='form-group'>
           <input className="form-control" placeholder={'Your Name'} type='text' onChange={(e) => {this.handleFormChange(e, 'commentAuthor')}} value={commentAuthor }/>
         </div>

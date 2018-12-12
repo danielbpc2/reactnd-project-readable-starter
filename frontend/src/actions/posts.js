@@ -1,10 +1,11 @@
-import { savePost, votePost, deletePost } from '../utils/api'
+import { savePost, votePost, deletePost, editPost } from '../utils/api'
 import { generateId } from '../utils/helpers'
 // action types
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const VOTE_POST = 'VOTE_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const EDIT_POST = 'EDIT_POST'
 
 export const receivePosts = (posts) => {
   return {
@@ -35,6 +36,14 @@ export const deletePostAction = (id) => {
   }
 }
 
+export const editPostAction = (id, change) => {
+  return {
+    type: EDIT_POST,
+    id,
+    change
+  }
+}
+
 export function handleAddPost (postInfo) {
   return (dispatch) => {
     const post = Object.assign({id: generateId(), timestamp: Date.now()}, postInfo)
@@ -54,5 +63,12 @@ export function handleDeletePost (id) {
   return dispatch => {
     return deletePost(id)
     .then(dispatch(deletePostAction(id)))
+  }
+}
+
+export function handleEditPost (id, change) {
+  return dispatch => {
+    return editPost(id, change)
+    .then(dispatch(editPostAction(id,change)))
   }
 }

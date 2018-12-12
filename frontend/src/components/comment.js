@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { voteComment, deleteComment } from '../utils/api'
+import { voteComment } from '../utils/api'
 
 class Comment extends Component {
   state ={
@@ -24,7 +24,7 @@ class Comment extends Component {
   }
 
   render(){
-    const { comment, handleDeleteComment } = this.props
+    const { comment } = this.props
     const { voteScore } = this.state
 
     return(

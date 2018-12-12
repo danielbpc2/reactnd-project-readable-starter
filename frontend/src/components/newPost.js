@@ -34,6 +34,7 @@ class NewPost extends Component {
 
     return (
       <form className='container' onSubmit={e => this.onSubmit(e)}>
+      <h3>Make a new Post</h3>
         <div className='form-group'>
           <label>Title:</label>
           <input className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
