@@ -45,8 +45,8 @@ class Comment extends Component {
 
     return(
       this.state.isEditing ?
-      <div className='text-center'>
-         <form onSubmit={(e) => this.submitEdit(e, comment.id)}>
+      <div className='container'>
+         <form className='comment-form comment-text' onSubmit={(e) => this.submitEdit(e, comment.id)}>
           <div className='form-group'>
             <textarea className="form-control" onChange={e => this.handleFormChange(e,'body')} value={ body }/>
           </div>
@@ -64,13 +64,17 @@ class Comment extends Component {
           <div className="post-arrow-down" onClick={(e) => this.handleVotes(comment.id, 'downVote')}></div>
         </div>
         <div className='comment-body'>
-          <p>{comment.author}</p>
-          <p>{body}</p>
+          <div className="comment-author">
+            <p>{comment.author}:</p>
+          </div>
+          <div className="comment-text">
+            <p>{body}</p>
+          </div>
+          <ul className="list-inline comment-control">
+            <li><span onClick={(e) =>this.enableEdit(e)}>Edit</span></li>
+            <li><span onClick={(e) => {this.onDelete(comment.id, e)}}>Delete</span></li>
+          </ul>
         </div>
-        <ul className="list-inline">
-          <li><span onClick={(e) =>this.enableEdit(e)}>Edit</span></li>
-          <li><span onClick={(e) => {this.onDelete(comment.id, e)}}>Delete</span></li>
-        </ul>
       </div>
     )
   }

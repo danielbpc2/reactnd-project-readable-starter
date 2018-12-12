@@ -24,19 +24,21 @@ class NewComment extends Component {
     const { commentBody, commentAuthor } = this.state
 
     return (
-      <form className='container text-center' onSubmit={e => this.handleSubmit(e)}>
-        <h3>Leave a comment</h3>
-        <div className='form-group'>
-          <input className="form-control" placeholder={'Your Name'} type='text' onChange={(e) => {this.handleFormChange(e, 'commentAuthor')}} value={commentAuthor }/>
-        </div>
-        <div className='form-group'>
-          <textarea className="form-control" placeholder={'Write your comment here.'}  onChange={(e) => {this.handleFormChange(e, 'commentBody')}} value={commentBody}/>
-        </div>
-        {commentBody !== '' && commentAuthor !== '' ?
-        <button type='submit' className={'btn btn-success'}>Submit</button>
-        : null
-      }
-      </form>
+      <div className='container'>
+          <form className='post-details-info' onSubmit={e => this.handleSubmit(e)}>
+            <h3>Leave a comment</h3>
+            <div className='form-group'>
+              <input className="form-control" placeholder={'Your Name'} type='text' onChange={(e) => {this.handleFormChange(e, 'commentAuthor')}} value={commentAuthor }/>
+            </div>
+            <div className='form-group'>
+              <textarea className="form-control" placeholder={'Write your comment here.'}  onChange={(e) => {this.handleFormChange(e, 'commentBody')}} value={commentBody}/>
+            </div>
+            {commentBody !== '' && commentAuthor !== '' ?
+            <button type='submit' className={'btn btn-success'}>Submit</button>
+            : null
+          }
+          </form>
+      </div>
     )
   }
 }

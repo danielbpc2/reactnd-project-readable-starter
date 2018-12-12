@@ -45,12 +45,16 @@ class Post extends Component {
         <div className='post'>
            <form onSubmit={(e) => this.submitEdit(e, post.id)}>
             <div className='form-group'>
-              <input className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
+              <input placeholder="Write your post title" className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
             </div>
-            <div className='form-group'>
-              <textarea className="form-control" onChange={e => this.handleFormChange(e,'body')} value={ this.state.body }/>
+            <div className='form-group post-body'>
+              <p>Post content:</p>
+              <textarea placeholder="Write your post content" className="form-control" onChange={e => this.handleFormChange(e,'body')} value={ this.state.body }/>
             </div>
+           {this.state.body !== '' &&  this.state.title !== ''?
             <button type='submit' className={'btn btn-success'}>Submit</button>
+          : null
+          }
           </form>
         </div>
       :
@@ -61,7 +65,7 @@ class Post extends Component {
             <div className="post-arrow-down" onClick={(e) => this.handleVotes(post.id, 'downVote')}></div>
           </div>
           <div className='post-body'>
-            <Link to={`/${post.category}/${post.id}`}>{post.title}</Link>
+            <h3><Link to={`/${post.category}/${post.id}`}>{post.title}</Link></h3>
             <p>{post.author}</p>
             <p>{post.commentCount} Comments.</p>
           </div>

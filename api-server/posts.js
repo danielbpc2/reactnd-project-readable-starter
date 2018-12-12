@@ -24,6 +24,17 @@ const defaultData = {
     voteScore: -5,
     deleted: false,
     commentCount: 0
+  },
+  "thisissofakeIdNonenotice": {
+    id: 'thisissofakeIdNonenotice',
+    timestamp: Date.now(),
+    title: 'Oh Wow a Custom Post',
+    body: 'It\'s not magic, its technology',
+    author: 'Danielbpc',
+    category: 'udacity',
+    voteScore: 10,
+    deleted: false,
+    commentCount: 0
   }
 }
 

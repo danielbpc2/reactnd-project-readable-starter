@@ -4,8 +4,11 @@ import Comment from './comment'
 class CommentList extends Component {
   render(){
     return (
-      <div className="text-center">
-        <ul className="list-unstyled">
+      <div className="container">
+        <ul className="list-unstyled comment-list">
+          {this.props.comments.length === 0
+            ? <p>No one commented here yet, be the first!</p>
+            : <p>Comments:</p>}
           {this.props.comments.map(comment =>
             <li key={comment.id}>
               <Comment handleDeleteComment={this.props.handleDeleteComment} comment={comment}/>

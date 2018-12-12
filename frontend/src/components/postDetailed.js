@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { getPostComments , saveComment, deleteComment } from '../utils/api'
 import { handleDeletePost, handleVote, handleEditPost } from '../actions/posts'
 import { generateId } from '../utils/helpers'
@@ -15,6 +15,7 @@ class PostDetailed extends Component {
     isEditingPost: false,
     title: '',
     body: '',
+    redirect: false
   }
 
   componentDidMount(){
@@ -35,6 +36,7 @@ class PostDetailed extends Component {
     e.preventDefault()
     const {dispatch} = this.props
     dispatch(handleDeletePost(id))
+    this.setState({redirect: true})
   }
 
   handleVotes(postId, option){
@@ -62,8 +64,11 @@ class PostDetailed extends Component {
 
   render(){
     const {post} = this.props
-    const {isEditingPost} = this.state
+    const {isEditingPost, comments, redirect } = this.state
 
+    if (redirect === true) {
+        return <Redirect to='/'/>
+      }
     return(
       post !== undefined
         ?
@@ -72,7 +77,9 @@ class PostDetailed extends Component {
           <Fragment>
             <NavBar categoryName={post.category}/>
             <div className="container text-center">
-              <h1> 404: This post was deleted</h1>
+              <div className="post-details-info">
+                <h1> 404: This post was deleted</h1>
+              </div>
             </div>
           </Fragment>
           :
@@ -82,31 +89,45 @@ class PostDetailed extends Component {
               isEditingPost === false
               ?
             <div className='container'>
-                  <h1>{post.title}</h1>
-                  <p>{post.author} - {new Date(post.timestamp).toString()}</p>
-                  <div className="post-arrow" onClick={(e) => this.handleVotes(post.id, 'upVote')}></div>
-                  <p>{post.voteScore}</p>
-                  <div className="post-arrow-down" onClick={(e) => this.handleVotes(post.id, 'downVote')}></div>
-                  <p>{post.commentCount} comments</p>
+              <div className='post-details-info'>
+                <div className='post-details-top'>
+                  <div className="post-upvote">
+                    <div className="post-arrow" onClick={(e) => this.handleVotes(post.id, 'upVote')}></div>
+                    <div className="post-count">{post.voteScore}</div>
+                    <div className="post-arrow-down" onClick={(e) => this.handleVotes(post.id, 'downVote')}></div>
+                  </div>
+                  <div className='post-details-title'>
+                    <h3>{post.title}</h3>
+                    <p>{post.author} - {new Date(post.timestamp).toLocaleTimeString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'UTC', timeZoneName: 'short' })}</p>
+                  </div>
+                </div>
+                <div className='post-details-body'>
                   <p>{post.body}</p>
-                  <button onClick={(e) => this.handleDelete(post.id, e)}>Delete</button>
-                  <button onClick={(e) => this.enableEdit()}>Edit</button>
-            </div>
+                </div>
+                  <div className='post-details-controls'>
+                    <button className='btn btn-secondary' onClick={(e) => this.enableEdit()}>Edit</button>
+                    <button className='btn btn-danger' onClick={(e) => this.handleDelete(post.id, e)}>Delete</button>
+                  </div>
+                  <p style={{marginBottom: '0px'}}>{comments.length} comments</p>
+                </div>
+              </div>
             :
-            <div className='container'>
-               <form onSubmit={(e) => this.submitEdit(e, post.id)}>
-                <div className='form-group'>
-                  <input className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
+              <div className='container'>
+                <div className='post-details-info'>
+                   <form onSubmit={(e) => this.submitEdit(e, post.id)}>
+                    <div className='form-group'>
+                      <input className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
+                    </div>
+                    <div className='form-group'>
+                      <textarea className="form-control" onChange={e => this.handleFormChange(e,'body')} value={ this.state.body }/>
+                    </div>
+                    <button type='submit' className={'btn btn-success'}>Submit</button>
+                  </form>
                 </div>
-                <div className='form-group'>
-                  <textarea className="form-control" onChange={e => this.handleFormChange(e,'body')} value={ this.state.body }/>
-                </div>
-                <button type='submit' className={'btn btn-success'}>Submit</button>
-              </form>
-            </div>
+              </div>
              }
               <NewComment onSubmit={this.onSubmit} postId={post.id}/>
-              <CommentList handleDeleteComment={this.handleDeleteComment} comments={this.state.comments}/>
+              <CommentList handleDeleteComment={this.handleDeleteComment} comments={comments}/>
           </Fragment>
         :
         null

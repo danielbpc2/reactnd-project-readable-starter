@@ -33,19 +33,19 @@ class NewPost extends Component {
     }
 
     return (
-      <form className='container' onSubmit={e => this.onSubmit(e)}>
+      <form className='post-details-info' onSubmit={e => this.onSubmit(e)}>
       <h3>Make a new Post</h3>
         <div className='form-group'>
           <label>Title:</label>
-          <input className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
+          <input placeholder="Post Title" className="form-control" type='text' onChange={e => this.handleFormChange(e,'title')} value={ this.state.title }/>
         </div>
         <div className='form-group'>
           <label>Author:</label>
-          <input className="form-control" type='text' onChange={e => this.handleFormChange(e,'author')} value={ this.state.author }/>
+          <input placeholder="Your Username" className="form-control" type='text' onChange={e => this.handleFormChange(e,'author')} value={ this.state.author }/>
         </div>
         <div className='form-group'>
           <label>Text:</label>
-          <textarea className="form-control" onChange={e => this.handleFormChange(e,'body')} value={this.state.body}/>
+          <textarea placeholder="Write your post content here!" className="form-control" onChange={e => this.handleFormChange(e,'body')} value={this.state.body}/>
         </div>
         <div className='form-group'>
           <label>Category:</label>
