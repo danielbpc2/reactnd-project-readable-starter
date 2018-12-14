@@ -1,5 +1,5 @@
 import { savePost, votePost, deletePost, editPost } from '../utils/api'
-import { generateId } from '../utils/helpers'
+import uuidv4 from 'uuid'
 // action types
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const ADD_POST = 'ADD_POST'
@@ -46,7 +46,7 @@ export const editPostAction = (id, change) => {
 
 export function handleAddPost (postInfo) {
   return (dispatch) => {
-    const post = Object.assign({id: generateId(), timestamp: Date.now()}, postInfo)
+    const post = Object.assign({id: uuidv4(), timestamp: Date.now()}, postInfo)
     return savePost(post)
     .then( ( post ) => dispatch(addPost( post ) ) )
     }

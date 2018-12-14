@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, Redirect } from 'react-router-dom'
 import { getPostComments , saveComment, deleteComment } from '../utils/api'
 import { handleDeletePost, handleVote, handleEditPost } from '../actions/posts'
-import { generateId } from '../utils/helpers'
+import uuidv4 from 'uuid'
 // Components
 import NavBar from './navBar'
 import CommentList from './commentList'
@@ -19,7 +19,9 @@ class PostDetailed extends Component {
   }
 
   componentDidMount(){
-    getPostComments(this.props.postId).then(data => this.setState({comments: data}))
+    if (this.props.post !== undefined) {
+      getPostComments(this.props.post.id).then(data => this.setState({comments: data}))
+    }
   }
 
   handleFormChange(event, input) {
@@ -27,9 +29,12 @@ class PostDetailed extends Component {
   }
 
   onSubmit = (commentBody, commentAuthor, postId) => {
-    const newComment = { id: generateId(), timestamp: Date.now(), body: commentBody, author: commentAuthor, parentId: postId }
+    const { dispatch } = this.props
+    const { comments } = this.state
+    const newComment = { id: uuidv4(), timestamp: Date.now(), body: commentBody, author: commentAuthor, parentId: postId }
     saveComment(newComment)
     .then(data => this.setState((prevState)=> ( {comments: [...prevState.comments,data]}) ))
+    dispatch(handleEditPost( postId, { commentCount: comments.length + 1 } ))
   }
 
   handleDelete(id, e){
@@ -45,8 +50,11 @@ class PostDetailed extends Component {
   }
 
   handleDeleteComment = (id) => {
+    const { dispatch, post } = this.props
+    const { comments } = this.state
     deleteComment(id)
     .then(this.setState( (prevState) => ( { comments: prevState.comments.filter(comment => comment.id !== id) } ) ) )
+    dispatch(handleEditPost( post.id, { commentCount: comments.length - 1 } ))
   }
 
   enableEdit = () => {
@@ -67,22 +75,12 @@ class PostDetailed extends Component {
     const {isEditingPost, comments, redirect } = this.state
 
     if (redirect === true) {
-        return <Redirect to='/'/>
+          return <Redirect to='/'/>
       }
+
     return(
       post !== undefined
         ?
-        post.deleted
-          ?
-          <Fragment>
-            <NavBar categoryName={post.category}/>
-            <div className="container text-center">
-              <div className="post-details-info">
-                <h1> 404: This post was deleted</h1>
-              </div>
-            </div>
-          </Fragment>
-          :
           <Fragment>
             <NavBar categoryName={post.category}/>
             {
@@ -130,7 +128,14 @@ class PostDetailed extends Component {
             <CommentList handleDeleteComment={this.handleDeleteComment} comments={comments}/>
           </Fragment>
         :
-        null
+        <Fragment>
+            <NavBar/>
+            <div className="container text-center">
+              <div className="post-details-info">
+                <h1> 404: This post was deleted</h1>
+              </div>
+            </div>
+          </Fragment>
     )
   }
 }
@@ -140,7 +145,6 @@ function mapStateToProps({posts}, props ) {
   const post = posts[id]
 
   return {
-    postId: id,
     post: post,
   }
 }

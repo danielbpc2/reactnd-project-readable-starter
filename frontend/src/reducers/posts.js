@@ -1,6 +1,6 @@
 import { RECEIVE_POSTS, ADD_POST, VOTE_POST, DELETE_POST, EDIT_POST } from '../actions/posts'
 
-const posts = (state = [], action ) => {
+const posts = (state = {}, action ) => {
   switch(action.type){
     case RECEIVE_POSTS :
     return {
