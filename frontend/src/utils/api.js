@@ -1,6 +1,6 @@
 const url = "http://localhost:3001"
 
-const headers = { 'Authorization': `${Math.random().toString(36).substr(-8)}` }
+const headers = { 'Authorization': "Fixed_Problem" }
 
 //Get all of the posts. Useful for the main page when no category is selected.
 export const getAllPosts = () => (
