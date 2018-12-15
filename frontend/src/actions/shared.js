@@ -1,7 +1,7 @@
-import { receivePosts } from './posts'
-import { receiveCategories } from './categories'
-import { receiveComments } from './comments'
-import { getAllPosts, getCategories, getAllPostComments, getInitialData } from '../utils/api'
+import { receivePosts, setPost } from './posts'
+import { receiveCategories} from './categories'
+import { setComment } from './comments'
+import { getPost, getPostComments, getInitialData } from '../utils/api'
 
 export const LOADING_BEGIN = 'LOADING_BEGIN'
 export const LOADING_END = 'LOADING_END'
@@ -34,6 +34,18 @@ export const loadEnd = () => {
   }
 }
 
+export const handleSetPost = (postId) => {
+  return (dispatch) => {
+    getPost(postId).then(post => dispatch(setPost(post)))
+  }
+}
+
+export const handleSetComments = (postId) => {
+  return (dispatch) => {
+    getPostComments(postId).then(comments => dispatch(setComment(comments)))
+  }
+}
+
 export const handleInitialData = () => {
   return (dispatch) => {
     dispatch(loadBegin())
@@ -41,7 +53,6 @@ export const handleInitialData = () => {
       getInitialData().then( ({posts, categories, comments }) => {
         dispatch(receivePosts(posts))
         dispatch(receiveCategories(categories))
-        dispatch(receiveComments(comments))
         dispatch(loadEnd())
       })
     )

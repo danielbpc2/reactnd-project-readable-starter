@@ -1,22 +1,22 @@
 import { saveComment, deleteComment, editComment, voteComment } from '../utils/api'
 
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
-
-export const receiveComments = (comments) => {
-  return {
-    type: RECEIVE_COMMENTS,
-    comments
-  }
-}
+export const SET_COMMENT = 'SET_COMMENT'
 
 export const addComment = (comment) => {
   return {
     type: ADD_COMMENT,
     comment
+  }
+}
+
+export const setComment = (comments) => {
+  return {
+    type: SET_COMMENT,
+    comments
   }
 }
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, Redirect } from 'react-router-dom'
 import { handleDeletePost, handleVote, handleEditPost } from '../actions/posts'
 import { handleAddComment, handleDeleteComment } from '../actions/comments'
+import { handleSetPost, handleSetComments } from '../actions/shared'
 import uuidv4 from 'uuid'
 // Components
 import NavBar from './navBar'
@@ -17,15 +18,20 @@ class PostDetailed extends Component {
     redirect: false
   }
 
+  componentDidMount(){
+    this.props.post === undefined && this.props.dispatch(handleSetPost(this.props.match.params.id))
+    this.props.dispatch(handleSetComments(this.props.match.params.id))
+  }
+
   handleFormChange(event, input) {
     this.setState( {[input]: event.target.value} )
   }
 
   onSubmit = (commentBody, commentAuthor, postId) => {
-    const { dispatch, comments } = this.props
+    const { dispatch, postComments } = this.props
     const newComment = { id: uuidv4(), timestamp: Date.now(), body: commentBody, author: commentAuthor, parentId: postId }
     dispatch(handleAddComment(newComment))
-    dispatch(handleEditPost( postId, { commentCount: comments.length + 1 } ))
+    dispatch(handleEditPost( postId, { commentCount: postComments.length + 1 } ))
   }
 
   handleDelete(id, e){
@@ -41,9 +47,9 @@ class PostDetailed extends Component {
   }
 
   deleteComment = (id) => {
-    const { dispatch, post, comments } = this.props
+    const { dispatch, post, postComments } = this.props
     dispatch(handleDeleteComment(id))
-    dispatch(handleEditPost( post.id, { commentCount: comments.length - 1 } ))
+    dispatch(handleEditPost( post.id, { commentCount: postComments.length - 1 } ))
   }
 
   enableEdit = () => {
@@ -60,7 +66,7 @@ class PostDetailed extends Component {
   }
 
   render(){
-    const { post, comments } = this.props
+    const { post, postComments } = this.props
     const { isEditingPost, redirect } = this.state
 
     if (redirect === true) {
@@ -95,7 +101,7 @@ class PostDetailed extends Component {
                     <button className='btn btn-secondary' onClick={(e) => this.enableEdit()}>Edit</button>
                     <button className='btn btn-danger' onClick={(e) => this.handleDelete(post.id, e)}>Delete</button>
                 </div>
-                <p style={{marginBottom: '0px'}}>{comments.length} comments</p>
+                <p style={{marginBottom: '0px'}}>{postComments.length} Comments</p>
               </div>
             </div>
             :
@@ -114,14 +120,14 @@ class PostDetailed extends Component {
               </div>
              }
             <NewComment onSubmit={this.onSubmit} postId={post.id}/>
-            <CommentList deleteComment={this.deleteComment} comments={comments}/>
+            <CommentList deleteComment={this.deleteComment} comments={postComments}/>
           </Fragment>
         :
         <Fragment>
             <NavBar/>
             <div className="container text-center">
               <div className="post-details-info">
-                <h1> 404: This post was deleted</h1>
+                <h1> 404: This post does not exist.</h1>
               </div>
             </div>
           </Fragment>
@@ -132,10 +138,11 @@ class PostDetailed extends Component {
 function mapStateToProps({posts, comments}, props ) {
   const { id } = props.match.params
   const post = posts[id]
+  const postComments = comments
 
   return {
     post: post,
-    comments: comments.filter(comment => comment.parentId === post.id )
+    postComments: postComments,
   }
 }
 

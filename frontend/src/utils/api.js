@@ -136,10 +136,8 @@ export function getInitialData () {
   return Promise.all([
     getAllPosts(),
     getCategories(),
-    getAllPostComments(),
-  ]).then(([posts, categories, comments,]) => ({
+  ]).then(([posts, categories]) => ({
     posts,
     ...categories,
-    comments,
   }))
 }
