@@ -131,5 +131,3 @@ export const getCategoryPosts = (category) => (
   fetch(`${url}/${category}/posts`, { headers })
     .then(res => res.json())
 )
-
-getAllPostComments()

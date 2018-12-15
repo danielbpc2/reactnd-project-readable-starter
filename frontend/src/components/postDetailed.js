@@ -11,7 +11,6 @@ import NewComment from './newComment'
 
 class PostDetailed extends Component {
   state = {
-    // comments: [],
     isEditingPost: false,
     title: '',
     body: '',
@@ -28,10 +27,7 @@ class PostDetailed extends Component {
 
   onSubmit = (commentBody, commentAuthor, postId) => {
     const { dispatch, comments } = this.props
-    // const { comments } = this.state
     const newComment = { id: uuidv4(), timestamp: Date.now(), body: commentBody, author: commentAuthor, parentId: postId }
-    // saveComment(newComment)
-    // .then(data => this.setState((prevState)=> ( {comments: [...prevState.comments,data]}) ))
     dispatch(handleAddComment(newComment))
     dispatch(handleEditPost( postId, { commentCount: comments.length + 1 } ))
   }
@@ -50,9 +46,6 @@ class PostDetailed extends Component {
 
   deleteComment = (id) => {
     const { dispatch, post, comments } = this.props
-    // const { comments } = this.state
-    // deleteComment(id)
-    // .then(this.setState( (prevState) => ( { comments: prevState.comments.filter(comment => comment.id !== id) } ) ) )
     dispatch(handleDeleteComment(id))
     dispatch(handleEditPost( post.id, { commentCount: comments.length - 1 } ))
   }
