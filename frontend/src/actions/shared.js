@@ -5,21 +5,6 @@ import { getPost, getPostComments, getInitialData } from '../utils/api'
 
 export const LOADING_BEGIN = 'LOADING_BEGIN'
 export const LOADING_END = 'LOADING_END'
-// export const handleInitialData = () => {
-//   return (dispatch) => {
-//     return(
-//       getAllPosts().then((data) => (
-//         dispatch(receivePosts(data))
-//       )),
-//       getCategories().then((data) => (
-//         dispatch(receiveCategories(data.categories))
-//       )),
-//       getAllPostComments().then(data => (
-//         dispatch(receiveComments(data))
-//       ))
-//     )
-//   }
-// }
 
 export const loadBegin = () => {
   return {

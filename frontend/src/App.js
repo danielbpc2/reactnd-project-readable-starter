@@ -10,10 +10,6 @@ import NewPostPage from './components/newPostPage'
 import PostDetailed from './components/postDetailed'
 
 class App extends Component {
-  state = {
-    isLoading: true
-  }
-
   componentDidMount (){
     this.props.getData()
   }
@@ -52,7 +48,7 @@ const mapStateToProps = ({ posts, categories, comments, loading }) => {
 
 function mapDispatchToProps(dispatch) {
     return({
-        getData: () => {dispatch(handleInitialData())}
+        getData: () => { dispatch(handleInitialData()) }
     })
 }
 
