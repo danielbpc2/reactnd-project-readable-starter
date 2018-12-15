@@ -131,3 +131,15 @@ export const getCategoryPosts = (category) => (
   fetch(`${url}/${category}/posts`, { headers })
     .then(res => res.json())
 )
+
+export function getInitialData () {
+  return Promise.all([
+    getAllPosts(),
+    getCategories(),
+    getAllPostComments(),
+  ]).then(([posts, categories, comments,]) => ({
+    posts,
+    ...categories,
+    comments,
+  }))
+}

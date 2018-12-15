@@ -17,10 +17,6 @@ class PostDetailed extends Component {
     redirect: false
   }
 
-  componentDidMount(){
-
-  }
-
   handleFormChange(event, input) {
     this.setState( {[input]: event.target.value} )
   }
@@ -64,8 +60,8 @@ class PostDetailed extends Component {
   }
 
   render(){
-    const {post, comments } = this.props
-    const {isEditingPost, redirect } = this.state
+    const { post, comments } = this.props
+    const { isEditingPost, redirect } = this.state
 
     if (redirect === true) {
           return <Redirect to='/'/>

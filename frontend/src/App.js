@@ -15,8 +15,7 @@ class App extends Component {
   }
 
   componentDidMount (){
-    const {dispatch} = this.props
-    dispatch(handleInitialData()).then(this.setState({isLoading: false }))
+    this.props.getData()
   }
 
   render() {
@@ -24,8 +23,8 @@ class App extends Component {
       <BrowserRouter>
         <Fragment>
           {
-            this.state.isLoading
-            ? console.log('Loading Done')
+            this.props.loading === null
+            ? null
             :
             <Fragment>
               <Switch>
@@ -42,4 +41,19 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+const mapStateToProps = ({ posts, categories, comments, loading }) => {
+  return {
+    posts,
+    categories,
+    comments,
+    loading
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+    return({
+        getData: () => {dispatch(handleInitialData())}
+    })
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
