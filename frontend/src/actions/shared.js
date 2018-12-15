@@ -33,7 +33,6 @@ export const handleSetComments = (postId) => {
 
 export const handleInitialData = () => {
   return (dispatch) => {
-    dispatch(loadBegin())
     return(
       getInitialData().then( ({posts, categories, comments }) => {
         dispatch(receivePosts(posts))
