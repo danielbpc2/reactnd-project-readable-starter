@@ -11,7 +11,7 @@ class CommentList extends Component {
             : <p>Comments:</p>}
           {this.props.comments.map(comment =>
             <li key={comment.id}>
-              <Comment handleDeleteComment={this.props.handleDeleteComment} comment={comment}/>
+              <Comment deleteComment={this.props.deleteComment} comment={comment}/>
             </li>)}
         </ul>
       </div>

@@ -1,6 +1,7 @@
 import { receivePosts } from './posts'
 import { receiveCategories } from './categories'
-import { getAllPosts, getCategories } from '../utils/api'
+import { receiveComments } from './comments'
+import { getAllPosts, getCategories, getAllPostComments } from '../utils/api'
 
 export const handleInitialData = () => {
   return (dispatch) => {
@@ -10,6 +11,9 @@ export const handleInitialData = () => {
       )),
       getCategories().then((data) => (
         dispatch(receiveCategories(data.categories))
+      )),
+      getAllPostComments().then(data => (
+        dispatch(receiveComments(data))
       ))
     )
   }

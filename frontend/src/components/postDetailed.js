@@ -1,8 +1,8 @@
 import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Redirect } from 'react-router-dom'
-import { getPostComments , saveComment, deleteComment } from '../utils/api'
 import { handleDeletePost, handleVote, handleEditPost } from '../actions/posts'
+import { handleAddComment, handleDeleteComment } from '../actions/comments'
 import uuidv4 from 'uuid'
 // Components
 import NavBar from './navBar'
@@ -11,7 +11,7 @@ import NewComment from './newComment'
 
 class PostDetailed extends Component {
   state = {
-    comments: [],
+    // comments: [],
     isEditingPost: false,
     title: '',
     body: '',
@@ -19,9 +19,7 @@ class PostDetailed extends Component {
   }
 
   componentDidMount(){
-    if (this.props.post !== undefined) {
-      getPostComments(this.props.post.id).then(data => this.setState({comments: data}))
-    }
+
   }
 
   handleFormChange(event, input) {
@@ -29,11 +27,12 @@ class PostDetailed extends Component {
   }
 
   onSubmit = (commentBody, commentAuthor, postId) => {
-    const { dispatch } = this.props
-    const { comments } = this.state
+    const { dispatch, comments } = this.props
+    // const { comments } = this.state
     const newComment = { id: uuidv4(), timestamp: Date.now(), body: commentBody, author: commentAuthor, parentId: postId }
-    saveComment(newComment)
-    .then(data => this.setState((prevState)=> ( {comments: [...prevState.comments,data]}) ))
+    // saveComment(newComment)
+    // .then(data => this.setState((prevState)=> ( {comments: [...prevState.comments,data]}) ))
+    dispatch(handleAddComment(newComment))
     dispatch(handleEditPost( postId, { commentCount: comments.length + 1 } ))
   }
 
@@ -49,11 +48,12 @@ class PostDetailed extends Component {
     dispatch(handleVote(postId, option))
   }
 
-  handleDeleteComment = (id) => {
-    const { dispatch, post } = this.props
-    const { comments } = this.state
-    deleteComment(id)
-    .then(this.setState( (prevState) => ( { comments: prevState.comments.filter(comment => comment.id !== id) } ) ) )
+  deleteComment = (id) => {
+    const { dispatch, post, comments } = this.props
+    // const { comments } = this.state
+    // deleteComment(id)
+    // .then(this.setState( (prevState) => ( { comments: prevState.comments.filter(comment => comment.id !== id) } ) ) )
+    dispatch(handleDeleteComment(id))
     dispatch(handleEditPost( post.id, { commentCount: comments.length - 1 } ))
   }
 
@@ -71,8 +71,8 @@ class PostDetailed extends Component {
   }
 
   render(){
-    const {post} = this.props
-    const {isEditingPost, comments, redirect } = this.state
+    const {post, comments } = this.props
+    const {isEditingPost, redirect } = this.state
 
     if (redirect === true) {
           return <Redirect to='/'/>
@@ -125,7 +125,7 @@ class PostDetailed extends Component {
               </div>
              }
             <NewComment onSubmit={this.onSubmit} postId={post.id}/>
-            <CommentList handleDeleteComment={this.handleDeleteComment} comments={comments}/>
+            <CommentList deleteComment={this.deleteComment} comments={comments}/>
           </Fragment>
         :
         <Fragment>
@@ -140,12 +140,13 @@ class PostDetailed extends Component {
   }
 }
 
-function mapStateToProps({posts}, props ) {
+function mapStateToProps({posts, comments}, props ) {
   const { id } = props.match.params
   const post = posts[id]
 
   return {
     post: post,
+    comments: comments.filter(comment => comment.parentId === post.id )
   }
 }
 

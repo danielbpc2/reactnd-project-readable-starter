@@ -64,6 +64,16 @@ export const getPostComments = (postId) => (
     .then(res => res.json())
 )
 
+export const getAllPostComments = (postId) => (
+    getAllPosts()
+    .then(data => {
+      const res = []
+      Object.keys(data).map( postid => getPostComments(postid).then(data => data.map((comment) => res.push(comment) )  ) )
+      return res
+    }
+  )
+)
+
 // Get comment details
 export const getComment = (commentId) => (
   fetch(`${url}/comments/${commentId}`, { headers })
@@ -121,3 +131,5 @@ export const getCategoryPosts = (category) => (
   fetch(`${url}/${category}/posts`, { headers })
     .then(res => res.json())
 )
+
+getAllPostComments()

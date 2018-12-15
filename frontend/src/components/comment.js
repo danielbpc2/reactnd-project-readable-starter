@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { voteComment, editComment } from '../utils/api'
+import { connect } from 'react-redux'
+import { handleEditComment, handleVoteComment } from '../actions/comments'
 
 class Comment extends Component {
   state ={
@@ -9,21 +10,16 @@ class Comment extends Component {
   }
 
   handleVotes(commentId, option){
-    voteComment(commentId, option)
-    .catch((e) => {
-      alert('there was an error voting this comment, try again.')
-      option === 'upVote' ? this.setState((prevState) => ({voteScore: prevState.voteScore -= 1}))
-      : this.setState((prevState) => ({voteScore: prevState.voteScore += 1}))
-    })
-
+    const { dispatch } = this.props
+    dispatch(handleVoteComment(commentId, option))
     option === 'upVote' ? this.setState((prevState) => ({voteScore: prevState.voteScore += 1}))
     : this.setState((prevState) => ({voteScore: prevState.voteScore -= 1}))
   }
 
   onDelete(id, e) {
     e.preventDefault()
-    const { handleDeleteComment } = this.props
-    handleDeleteComment(id)
+    const { deleteComment } = this.props
+    deleteComment(id)
   }
 
   enableEdit = () => {
@@ -36,8 +32,10 @@ class Comment extends Component {
 
   submitEdit(e, id) {
     e.preventDefault()
+    const { dispatch } = this.props
     const { body } = this.state
-    editComment(id, { body: body }).then(this.setState({isEditing: false }))
+    dispatch(handleEditComment(id, { body: body }))
+    this.setState({isEditing: false })
   }
 
   render(){
@@ -81,4 +79,4 @@ class Comment extends Component {
   }
 }
 
-export default Comment
+export default connect()(Comment)
