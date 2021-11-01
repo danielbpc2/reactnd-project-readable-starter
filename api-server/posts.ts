@@ -1,4 +1,4 @@
-const clone = require('clone')
+import clone from 'clone';
 
 let db = {}
 
@@ -98,7 +98,7 @@ function add (token, post) {
 function vote (token, id, option) {
   return new Promise((res) => {
     let posts = getData(token)
-    post = posts[id]
+    const post = posts[id]
     switch(option) {
         case "upVote":
             post.voteScore = post.voteScore + 1
@@ -124,7 +124,7 @@ function disable (token, id) {
 function edit (token, id, post) {
     return new Promise((res) => {
         let posts = getData(token)
-        for (prop in post) {
+        for (const prop in post) {
             posts[id][prop] = post[prop]
         }
         res(posts[id])
@@ -138,7 +138,7 @@ function incrementCommentCounter(token, id, count) {
   }
 }
 
-module.exports = {
+export {
   get,
   getAll,
   getByCategory,
@@ -146,6 +146,5 @@ module.exports = {
   vote,
   disable,
   edit,
-  getAll,
   incrementCommentCounter
 }
