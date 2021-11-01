@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "A server for the Udacity Reddit Clone project for ReactND",
   "main": "index.js",
+  "scripts": {
+    "dev:consumer": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts"
+  },
   "keywords": [
     "udacity",
     "redux",
@@ -17,5 +20,9 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "clone": "^2.1.1"
+  },
+  "devDependencies": {
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.4"
   }
  }

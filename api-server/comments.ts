@@ -1,6 +1,5 @@
-const clone = require('clone')
-const posts = require('./posts')
-
+import clone from 'clone';
+import * as posts from './posts';
 let db = {}
 
 const defaultData = {
@@ -38,7 +37,7 @@ function getByParent (token, parentId) {
   return new Promise((res) => {
     let comments = getData(token)
     let keys = Object.keys(comments)
-    filtered_keys = keys.filter(key => comments[key].parentId === parentId && !comments[key].deleted)
+    const filtered_keys = keys.filter(key => comments[key].parentId === parentId && !comments[key].deleted)
     res(filtered_keys.map(key => comments[key]))
   })
 }
@@ -77,7 +76,7 @@ function add (token, comment) {
 function vote (token, id, option) {
   return new Promise((res) => {
     let comments = getData(token)
-    comment = comments[id]
+    const comment = comments[id]
     switch(option) {
         case "upVote":
             comment.voteScore = comment.voteScore + 1
@@ -95,8 +94,8 @@ function vote (token, id, option) {
 function disableByParent (token, post) {
     return new Promise((res) => {
         let comments = getData(token)
-        keys = Object.keys(comments)
-        filtered_keys = keys.filter(key => comments[key].parentId === post.id)
+        const keys = Object.keys(comments)
+        const filtered_keys = keys.filter(key => comments[key].parentId === post.id)
         filtered_keys.forEach(key => comments[key].parentDeleted = true)
         res(post)
     })
@@ -114,14 +113,14 @@ function disable (token, id) {
 function edit (token, id, comment) {
     return new Promise((res) => {
         let comments = getData(token)
-        for (prop in comment) {
+        for (const prop in comment) {
             comments[id][prop] = comment[prop]
         }
         res(comments[id])
     })
 }
 
-module.exports = {
+export {
   get,
   getByParent,
   add,

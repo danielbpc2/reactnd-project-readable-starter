@@ -1,12 +1,12 @@
 require('dotenv').config()
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import * as config from './config';
+import * as categories from './categories';
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const config = require('./config')
-const categories = require('./categories')
-const posts = require('./posts')
-const comments = require('./comments')
+import * as posts from './posts';
+import * as comments from './comments';
 
 const app = express()
 
